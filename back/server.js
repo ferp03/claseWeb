@@ -5,14 +5,13 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Configura CORS para permitir solicitudes desde el frontend
 app.use(cors({
-  origin: 'http://localhost:4200' // Permite solicitudes desde Angular
+  origin: 'http://localhost:4200'
 }));
 
 app.use(bodyParser.json());
 
-// Ruta de ejemplo
+// Rutas
 app.get('/api/mensaje', (req, res) => {
   res.json({ mensaje: 'Hola desde el backend!' });
 });
