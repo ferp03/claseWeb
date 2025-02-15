@@ -1,6 +1,5 @@
 <div class="login-container">
     <div class="login-box">
-        <div class="box-content">
             <form (submit)="login()">
                 <label>User:</label>
                 <input type="text" [(ngModel)]="user" name="user" required>
@@ -12,6 +11,5 @@
 
                 <p *ngIf="mensaje" class="error">{{mensaje}}</p>
             </form>
-        </div>
     </div>
 </div>

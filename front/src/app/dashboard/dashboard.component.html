@@ -1,7 +1,11 @@
-<div class="dashboard">
-    <h2>Bienvenido al Dashboard</h2>
-    <button (click)="logout()">Cerrar Sesión</button>
-    <button (click)="fetchApi()">Llamar api</button>
+<div class="dashboard-bg">
+    <div class="container">
+        <h2>Bienvenido al Dashboard</h2>
+        <div class="botones">
+            <button (click)="logout()">Cerrar Sesión</button>
+            <button (click)="fetchApi()">Llamar api</button>
+        </div>
+    </div>
     <p *ngIf="mensajeApi">{{mensajeApi}}</p>
 </div>
   
