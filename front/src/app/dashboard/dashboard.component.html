@@ -6,6 +6,8 @@
             <button (click)="fetchApi()">Llamar api</button>
         </div>
     </div>
-    <p *ngIf="mensajeApi">{{mensajeApi}}</p>
+    <div class="container">
+        <p *ngIf="mensajeApi"><strong>{{mensajeApi}}</strong></p>
+    </div>
 </div>
   
