@@ -16,10 +16,13 @@ export class LoginComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   login(): void{
-    if(this.auth.login(this.user, this.password)){
-      this.router.navigate(["/dashboard"])
-    }else{
-      this.mensaje = "Usuario o contraseña incorrectos";
-    }
+    this.auth.login(this.user, this.password).subscribe(success => {
+      if(success){
+        this.router.navigate(["/dashboard"]);
+      }else{
+        this.mensaje = "Usuario o contraseña incorrectos";
+      }
+    })
+
   }
 }
