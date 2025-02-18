@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +22,9 @@ export class LoginComponent {
         this.mensaje = "Usuario o contraseña incorrectos";
       }
     })
+  }
 
+  guest(): void{
+    this.router.navigate(["/unsecuredRoute"]);
   }
 }
