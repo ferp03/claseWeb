@@ -1,16 +1,16 @@
 <div class="login-container">
     <div class="login-box">
-            <form (submit)="login()">
-                <label>User:</label>
-                <input type="text" [(ngModel)]="user" name="user" required>
+        <form (submit)="login()">
+            <label>User:</label>
+            <input type="text" [(ngModel)]="user" name="user" required>
 
-                <label>Password:</label>
-                <input type="text" [(ngModel)]="password" name="user" required>
+            <label>Password:</label>
+            <input type="text" [(ngModel)]="password" name="user" required>
 
-                <button type="submit">Log in</button>
+            <button type="submit">Log in</button>
 
-                <p *ngIf="mensaje" class="error">{{mensaje}}</p>
-            </form>
-            <button (click)="guest()">Seguir como invitado</button>
+            <p *ngIf="mensaje" class="error">{{mensaje}}</p>
+        </form>
+        <p style="color: white; margin: 12px; cursor: pointer; text-decoration: underline;" (click)="guest()">Continue as guest</p>
     </div>
 </div>
