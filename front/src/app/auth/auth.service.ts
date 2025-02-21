@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { tap, map } from 'rxjs';
 
@@ -8,14 +9,21 @@ import { tap, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private isLoggedIn = false;
-  constructor(private router: Router, private api: ApiService) { }
+  private authState = new BehaviorSubject<boolean>(this.estaAutenticado());
+
+  constructor(private router: Router, private api: ApiService, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   login(user: string, password: string): Observable<boolean>{
     return this.api.login(user, password).pipe(
       map(res =>{
         if(res.success){
-          this.isLoggedIn = true;
+          // agregar sesión a object storage con token
+          localStorage.setItem('token', 'dummy-token');
+          this.authState.next(true); 
+          /* 
+          Angular no es bueno en trackear el object storage cada que hace cambios,
+          por lo que implementamos un Behavior Subject para que lo haga implicitamente
+          */
           return true;
         }else{
           return false;
@@ -25,11 +33,19 @@ export class AuthService {
   }
 
   logout(): void {
-    this.isLoggedIn = false;
+    localStorage.removeItem('token');
+    this.authState.next(false);
     this.router.navigate(['/login']);
   }
 
-  estaAutenticado(): boolean {
-    return this.isLoggedIn;
+  estaAutenticado(): boolean{
+    if(isPlatformBrowser(this.platformId)){
+      return !! localStorage.getItem('token');
+    }
+    return false;
+  }
+
+  authStatus(): Observable<boolean>{
+    return this.authState.asObservable();
   }
 }

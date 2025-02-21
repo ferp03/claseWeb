@@ -25,6 +25,6 @@ export class LoginComponent {
   }
 
   guest(): void{
-    this.router.navigate(["/unsecuredRoute"]);
+    this.router.navigate(["/about"]);
   }
 }

@@ -12,10 +12,6 @@ export class DashboardComponent {
   constructor(private auth: AuthService, private router: Router, private apiService: ApiService){}
   mensajeApi = "";
 
-  logout(): void{
-    this.auth.logout()
-  }
-
   fetchApi(): void{
     this.apiService.getMensaje().subscribe(
       (response) => {

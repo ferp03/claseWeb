@@ -7,14 +7,20 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { AppComponent } from './app.component';
-import { UnsecuredPageComponent } from './Components/unsecured-page/unsecured-page.component';
+import { MenuBarComponent } from './Components/menu-bar/menu-bar.component';
+import { LayoutComponent } from './layout/layout.component';
+import { AboutComponent } from './Components/about/about.component';
+import { ContactComponent } from './Components/contact/contact.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    UnsecuredPageComponent
+    MenuBarComponent,
+    LayoutComponent,
+    AboutComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
