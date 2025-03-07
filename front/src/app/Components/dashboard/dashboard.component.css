@@ -14,8 +14,23 @@
 .container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    position: inherit;
+    height: 90vh;
+    width: 100vw;
+    bottom: 0;
+}
+
+.titulo{
+    align-self: center;
+}
+
+.filtro{
+    display: flex;
+    align-self: flex-end;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-around;
+    padding: 10px;
 }
 
 .botones{
@@ -26,11 +41,56 @@
     gap: 10px;
 }
 
-h2{
-    color: white;
+.card {
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    background-color: #fff;
+    text-align: center;
+    margin: 10px auto;
 }
 
-p{
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.card-body {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.card-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-footer a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.card-footer a:hover {
+    text-decoration: underline;
+}
+
+h2{
     color: white;
 }
 

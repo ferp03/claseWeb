@@ -28,6 +28,38 @@ app.post('/login', (req, res) => {
   }
 });
 
+app.post('/chuckNorris', (req, res) => {
+  const { category } = req.body;
+  console.log(category);
+  url = 'https://api.chucknorris.io/jokes/random';
+  if(category != 'none'){
+    url = `https://api.chucknorris.io/jokes/random?category=${category}`;
+  }
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      res.json({ joke: data });
+    })
+    .catch(error => {
+      console.error('Error fetching joke:', error);
+      res.status(500).json({ error: 'Failed to fetch joke' });
+    });
+});
+
+app.get('/categories', (req, res) => {
+  fetch('https://api.chucknorris.io/jokes/categories')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      res.json({ categories: data});
+    })
+    .catch(error => {
+      console.error('Error fetching categories:', error);
+      res.status(500).json({ error: 'Failed to fetch categories' });
+    });
+});
+
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);

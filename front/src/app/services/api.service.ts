@@ -18,4 +18,12 @@ export class ApiService {
   login(username: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, {username, password});
   }
+
+  fetchChuck(category: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/chuckNorris`, {category});
+  }
+
+  fetchCategories(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/categories`);
+  }
 }
