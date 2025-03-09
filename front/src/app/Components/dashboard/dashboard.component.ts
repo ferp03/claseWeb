@@ -24,7 +24,10 @@ export class DashboardComponent {
   categories: string[] = ['none'];
   selectedCategory: string = this.categories[0];
 
-  constructor(private auth: AuthService, private apiService: ApiService){}
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
+
+  constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
     this.fetchCategories();
@@ -36,6 +39,7 @@ export class DashboardComponent {
       .toPromise()
       .then(response => {
         this.chuckJson = response.jokes as Joke[];
+        this.currentPage  = 1;
         console.log(this.chuckJson);
       })
       .catch(error => {
@@ -53,6 +57,27 @@ export class DashboardComponent {
       .catch(error => {
         console.log('Error al obtener categorías', error);
       });
+  }
+
+  get totalPages(): number {
+    return this.chuckJson ? Math.ceil(this.chuckJson.length / this.itemsPerPage) : 1;
+  }
+
+  get paginatedJokes(): Joke[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.chuckJson ? this.chuckJson.slice(startIndex, startIndex + this.itemsPerPage) : [];
+  }
+
+  nextPage(): void {
+    if(this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage(): void {
+    if(this.currentPage > 1) {
+      this.currentPage--;
+    }
   }
 
 }

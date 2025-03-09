@@ -9,6 +9,7 @@
     height: 100vh;
     width: 100vw;
     background: linear-gradient(135deg, #2c3e50, #1e272e);
+    /* padding: 20px; */
 }
 
 .container{
@@ -47,7 +48,7 @@
     gap: 20px; /* Espacio entre tarjetas */
     width: 100vw;
     margin-top: 20px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 .card {
@@ -97,6 +98,34 @@
 
 .card-footer a:hover {
     text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    transition: background 0.3s;
+}
+
+.pagination button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+    background: #0056b3;
 }
 
 h2{
