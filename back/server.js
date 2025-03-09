@@ -12,10 +12,6 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Rutas
-app.get('/mensaje', (req, res) => {
-  res.json({ mensaje: 'Hola desde el backend!' });
-});
-
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   // console.log(`${username} y ${password}`);
@@ -29,21 +25,27 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/chuckNorris', (req, res) => {
-  const { category } = req.body;
+  const { category, num } = req.body;
   console.log(category);
-  url = 'https://api.chucknorris.io/jokes/random';
-  if(category != 'none'){
+
+  let url = 'https://api.chucknorris.io/jokes/random';
+  if (category !== 'none') {
     url = `https://api.chucknorris.io/jokes/random?category=${category}`;
   }
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      res.json({ joke: data });
+
+  const promises = Array.from({length: num}, () =>
+    fetch(url)
+      .then(response => response.json())
+  );
+
+  Promise.all(promises)
+    .then(jokes => {
+      console.log(jokes);
+      res.json({jokes});
     })
     .catch(error => {
-      console.error('Error fetching joke:', error);
-      res.status(500).json({ error: 'Failed to fetch joke' });
+      console.error('Error fetching jokes:', error);
+      res.status(500).json({ error: 'Failed to fetch jokes' });
     });
 });
 

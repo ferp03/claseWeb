@@ -20,50 +20,39 @@ interface Joke {
 
 export class DashboardComponent {  
   mensajeApi = "";
-  chuckJson: Joke | null = null;
+  chuckJson: Joke[] | null = null;
   categories: string[] = ['none'];
-  selectedCategory: string = '';
+  selectedCategory: string = this.categories[0];
 
-  constructor(private auth: AuthService, private router: Router, private apiService: ApiService){}
+  constructor(private auth: AuthService, private apiService: ApiService){}
 
   ngOnInit(): void {
     this.fetchCategories();
+    this.fetchChuck();
   }
-  
-  fetchApi(): void{
-    this.apiService.getMensaje().subscribe(
-      (response) => {
-        this.mensajeApi = response.mensaje;
-      },
-      (error) => {
-        console.error('Error al obtener el mensaje', error);
-      }
-    );
-  };
 
-  fetchChuck(): void{
-    console.log(this.selectedCategory);
-    this.apiService.fetchChuck(this.selectedCategory).subscribe({
-      next: (response) => {
-        this.chuckJson = response.joke as Joke;
+  fetchChuck(): void {
+    this.apiService.fetchChuck(this.selectedCategory, 10)
+      .toPromise()
+      .then(response => {
+        this.chuckJson = response.jokes as Joke[];
         console.log(this.chuckJson);
-      },
-      error: (error) => {
+      })
+      .catch(error => {
         console.log('Error al buscar chiste', error);
-      }
-    });
-  };
+      });
+  }
 
-  fetchCategories(): void{
-    this.apiService.fetchCategories().subscribe(
-      (response) => {
+  fetchCategories(): void {
+    this.apiService.fetchCategories()
+      .toPromise()
+      .then(response => {
         this.categories = [...this.categories, ...response.categories];
-        this.selectedCategory = this.categories[0];
         console.log(this.categories, typeof(this.categories));
-      },
-      (error) => {
-        console.log('Error al obtener categorias', error);
-      }
-    );
-  };
+      })
+      .catch(error => {
+        console.log('Error al obtener categorías', error);
+      });
+  }
+
 }

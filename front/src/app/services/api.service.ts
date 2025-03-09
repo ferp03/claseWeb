@@ -19,8 +19,9 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/login`, {username, password});
   }
 
-  fetchChuck(category: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/chuckNorris`, {category});
+  fetchChuck(category: string, num: number): Observable<any> {
+    console.log(category);
+    return this.http.post(`${this.apiUrl}/chuckNorris`, {category, num});
   }
 
   fetchCategories(): Observable<any> {

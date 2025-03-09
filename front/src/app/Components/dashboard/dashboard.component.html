@@ -5,23 +5,22 @@
         </div>
         <div class="filtro">  
             <h4 style="color: white; margin-right: 5px;">Filter a theme!</h4>
-            <select style="height: 20px;" [(ngModel)]="selectedCategory">
+            <select style="height: 20px;" [(ngModel)]="selectedCategory" (ngModelChange)="fetchChuck()">
                 <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
             </select>
         </div>
-        <div class="botones">
-            <button (click)="fetchChuck()">Search for joke</button>
-        </div>
-        <div *ngIf="chuckJson" class="card">
-            <div class="card-header">
-                <img [src]="chuckJson.icon_url" alt="Chuck Norris" class="avatar">
-                <h3>Chuck Norris</h3>
-            </div>
-            <div class="card-body">
-                <p>{{ chuckJson.value }}</p>
-            </div>
-            <div class="card-footer">
-                <span>Updated at: {{ chuckJson.updated_at | date:'medium' }}</span>
+        <div class="cards" *ngIf="chuckJson && chuckJson.length > 0">
+            <div *ngFor="let joke of chuckJson" class="card">
+                <div class="card-header">
+                    <img [src]="joke.icon_url" alt="Chuck Norris" class="avatar">
+                    <h3>Chuck Norris</h3>
+                </div>
+                <div class="card-body">
+                    <p>{{ joke.value }}</p>
+                </div>
+                <div class="card-footer">
+                    <span>Updated at: {{ joke.updated_at | date:'medium' }}</span>
+                </div>
             </div>
         </div>
     </div>
