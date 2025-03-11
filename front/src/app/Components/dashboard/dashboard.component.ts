@@ -25,7 +25,7 @@ export class DashboardComponent {
   selectedCategory: string = this.categories[0];
 
   currentPage: number = 1;
-  itemsPerPage: number = 8;
+  itemsPerPage: number = 5;
 
   constructor(private apiService: ApiService){}
 
@@ -35,7 +35,7 @@ export class DashboardComponent {
   }
 
   fetchChuck(): void {
-    this.apiService.fetchChuck(this.selectedCategory, 10)
+    this.apiService.fetchChuck(this.selectedCategory, 30)
       .toPromise()
       .then(response => {
         this.chuckJson = response.jokes as Joke[];
