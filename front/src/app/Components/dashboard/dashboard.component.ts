@@ -18,11 +18,12 @@ interface Joke {
   styleUrls: ['./dashboard.component.css']
 })
 
-export class DashboardComponent {  
-  mensajeApi = "";
-  chuckJson: Joke[] | null = null;
+export class DashboardComponent implements OnInit{  
+  mensajeApi = '';
+  chuckJson: Joke[] = [];
   categories: string[] = ['none'];
   selectedCategory: string = this.categories[0];
+  searchText: string =  '';
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -59,13 +60,24 @@ export class DashboardComponent {
       });
   }
 
-  get totalPages(): number {
-    return this.chuckJson ? Math.ceil(this.chuckJson.length / this.itemsPerPage) : 1;
+  get filterSearchJokes(): Joke[] {
+    if(this.searchText === '' || !this.searchText){
+      return this.chuckJson;
+    }
+    const filtered = this.chuckJson.filter(joke => 
+      joke.value.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+    this.currentPage = 1;
+    return filtered;
   }
-
+  
   get paginatedJokes(): Joke[] {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.chuckJson ? this.chuckJson.slice(startIndex, startIndex + this.itemsPerPage) : [];
+    return this.filterSearchJokes.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+  
+  get totalPages(): number {
+    return Math.ceil(this.filterSearchJokes.length / this.itemsPerPage);
   }
 
   nextPage(): void {
