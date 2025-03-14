@@ -11,16 +11,40 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
+// class Usuario {
+//   constructor(username, password) {
+//     this.username = username;
+//     this.password = password;
+//   }
+// }
+
+const Users = [
+  {username: "admin", password: "password"}
+];
+
 // Rutas
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  // console.log(`${username} y ${password}`);
-  if (username === 'admin' && password === 'password') {
+  const user = Users.find(u => u.username === username && u.password === password);
+  if (user) {
     console.log("Usuario autentificado");
     res.json({ success: true });
   } else {
     console.log("Accesso negado");
     res.json({ success: false });
+  }
+});
+
+app.post('/signup', (req, res) => {
+  const { username, password } = req.body;
+  const userExists = Users.find(u => u.username === username); // busca que el usuario no exista
+  if (userExists) {
+    console.log("Username already exists");
+    res.json({ success: false, message: 'El nombre de usuario ya existe' });
+  } else {
+    Users.push({ username, password });
+    console.log("User registered successfully");
+    res.json({ success: true, message: 'Usuario registrado correctamente'});
   }
 });
 
