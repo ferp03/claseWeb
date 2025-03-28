@@ -3,7 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from '../services/api.service';
-import { tap, map } from 'rxjs';
+import { catchError, tap, map } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +14,21 @@ export class AuthService {
 
   constructor(private router: Router, private api: ApiService, @Inject(PLATFORM_ID) private platformId: Object) { }
 
-  login(user: string, password: string): Observable<boolean>{
-    return this.api.login(user, password).pipe(
-      map(res =>{
-        if(res.success){
-          // agregar sesión a object storage con token
-          localStorage.setItem('token', 'dummy-token');
-          this.authState.next(true); 
-          /* 
-          Angular no es bueno en trackear el object storage cada que hace cambios,
-          por lo que implementamos un Behavior Subject para que lo haga implicitamente
-          */
-          return true;
-        }else{
-          return false;
+
+  login(email: string, password: string): Observable<any> {
+    return this.api.login(email, password).pipe(
+      tap(res => {
+        if (res.success) {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('username', res.username);
+          this.authState.next(true);
         }
+      }),
+      map(res => res),
+      catchError(err => {
+        return throwError(() => err);
       })
-    )
+    );
   }
 
   logout(): void {

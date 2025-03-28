@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  user = '';
+  username = '';
   password = '';
   password2 = '';
   mensaje = '';
@@ -21,37 +21,52 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router, private api: ApiService) {}
 
-  login(): void{
-    this.auth.login(this.user, this.password).subscribe(success => {
-      if(success){
-        this.errorCount = 0;
-        this.router.navigate(['/dashboard']);
-      }else if(this.errorCount>=2){
-        this.showForgot = true;
-      }else{
-        this.mensaje = 'Usuario o contraseña incorrectos';
-        this.errorCount++;
+  login(): void {
+    this.auth.login(this.email, this.password).subscribe({
+      next: (response: any) => {
+        if (response.success) {
+          this.errorCount = 0;
+          this.router.navigate(['/dashboard']);
+        } else if (this.errorCount >= 2) {
+          this.showForgot = true;
+        } else {
+          this.mensaje = response.error;
+          console.log(this.mensaje);
+          this.errorCount++;
+        }
+      },
+      error: (err) => {
+        // Este bloque se activa si el backend devuelve 401 u otro error de red
+        this.mensaje = err.error?.error || 'Hubo un error al intentar iniciar sesión';
+        console.log(this.mensaje);
       }
-    })
+    });
   }
 
   signup(): void {
-    if (!this.user || !this.password) {
-      this.mensaje = 'Debes ingresar usuario y contraseña.';
+    if (!this.username || !this.password || !this.email) {
+      this.mensaje = 'Debes ingresar usuario, correo y contraseña.';
       return;
     }else if(this.password !== this.password2){
       this.mensaje = 'Las contraseñas no coinciden';
       return;
     }
-    this.api.signup(this.user, this.password).subscribe(response => {
-      if(response.success){
-        this.mensaje = response.message;
-        this.login();
-      }else{
-        this.mensaje = response.message
+
+    this.api.signup(this.username, this.email, this.password).subscribe({
+      next: (response: any) => {
+        console.log(response)
+        if(response.success){
+          // this.mensaje = response.error;
+          // console.log(this.mensaje);
+          this.login();
+        }else{
+          this.mensaje = response.error;
+          console.log(this.mensaje);
+        }
+      }, error: (err) => {
+        this.mensaje = err.error?.error || 'Hubo un error al intentar iniciar sesión';
+        console.log(this.mensaje);
       }
-    }, error => {
-      this.mensaje = 'Hubo un error en el servidor, intente de nuevo';
     });
   }
 

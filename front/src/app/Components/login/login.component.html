@@ -3,11 +3,11 @@
         <!-- Login -->
         <div *ngIf="!isSignUp && !isForgot">
             <form (submit)="login()">
-                <label>User:</label>
-                <input type="text" [(ngModel)]="user" name="user" required>
+                <label>Email:</label>
+                <input type="text" [(ngModel)]="email" name="email" required>
                 
                 <label>Password:</label>
-                <input type="password" [(ngModel)]="password" name="user" required>
+                <input type="password" [(ngModel)]="password" name="password" required>
                 
                 <button type="submit">Log in</button>
                 <button *ngIf="showForgot" type="button" (click)="mensaje='';isForgot=true">Forgot password</button>
@@ -22,7 +22,10 @@
         <div *ngIf="isSignUp && !isForgot">    
             <form (submit)="signup()">
                 <label>User:</label>
-                <input type="text" [(ngModel)]="user" name="user" required>
+                <input type="text" [(ngModel)]="username" name="user" required>
+
+                <label>Email:</label>
+                <input type="text" [(ngModel)]="email" name="email" required>
                 
                 <label>Password:</label>
                 <input type="password" [(ngModel)]="password" name="password" required>
