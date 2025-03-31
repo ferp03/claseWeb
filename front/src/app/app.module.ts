@@ -11,6 +11,8 @@ import { MenuBarComponent } from './Components/menu-bar/menu-bar.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AboutComponent } from './Components/about/about.component';
 import { ContactComponent } from './Components/contact/contact.component';
+import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ContactComponent } from './Components/contact/contact.component';
     MenuBarComponent,
     LayoutComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

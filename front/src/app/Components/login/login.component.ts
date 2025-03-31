@@ -15,9 +15,7 @@ export class LoginComponent {
   mensaje = '';
   email = '';
   isSignUp = false;
-  showForgot = false;
-  isForgot = false;
-  errorCount = 0;
+  isLogin = true;
 
   constructor(private auth: AuthService, private router: Router, private api: ApiService) {}
 
@@ -25,14 +23,10 @@ export class LoginComponent {
     this.auth.login(this.email, this.password).subscribe({
       next: (response: any) => {
         if (response.success) {
-          this.errorCount = 0;
           this.router.navigate(['/dashboard']);
-        } else if (this.errorCount >= 2) {
-          this.showForgot = true;
         } else {
           this.mensaje = response.error;
           console.log(this.mensaje);
-          this.errorCount++;
         }
       },
       error: (err) => {
@@ -56,9 +50,9 @@ export class LoginComponent {
       next: (response: any) => {
         console.log(response)
         if(response.success){
-          // this.mensaje = response.error;
-          // console.log(this.mensaje);
-          this.login();
+          // this.login();
+          this.mensaje = 'Se mandó un correo para verificar tu cuenta'
+          this.router.navigate(['/login']);
         }else{
           this.mensaje = response.error;
           console.log(this.mensaje);
@@ -70,15 +64,7 @@ export class LoginComponent {
     });
   }
 
-  recover(): void{
-    alert(`Password sent to ${this.email}`)
-    this.email = '';
-    this.isSignUp = false;
-    this.showForgot = false;
-    this.isForgot = false;
-  }
-
-  guest(): void{
-    this.router.navigate(['/about']);
+  forgot(): void {
+    this.router.navigate(['/forgot-password']);
   }
 }

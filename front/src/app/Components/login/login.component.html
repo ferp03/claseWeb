@@ -1,7 +1,7 @@
 <div class="login-container">
     <div class="login-box">
         <!-- Login -->
-        <div *ngIf="!isSignUp && !isForgot">
+        <div *ngIf="isLogin">
             <form (submit)="login()">
                 <label>Email:</label>
                 <input type="text" [(ngModel)]="email" name="email" required>
@@ -10,16 +10,15 @@
                 <input type="password" [(ngModel)]="password" name="password" required>
                 
                 <button type="submit">Log in</button>
-                <button *ngIf="showForgot" type="button" (click)="mensaje='';isForgot=true">Forgot password</button>
                 
                 <p *ngIf="mensaje" class="error">{{mensaje}}</p>
             </form>
-            <p style="color: white; margin: 12px;" (click)="isSignUp=true;">Don't have an account? <span style=" cursor: pointer; text-decoration: underline;">Sign up</span></p>
+            <p style="color: white; margin: 12px;" (click)="isSignUp=true; isLogin=false">Don't have an account? <span style=" cursor: pointer; text-decoration: underline;">Sign up</span></p>
             <p style="color: white; margin: 12px;">or</p>
-            <p style="color: white; margin: 12px; cursor: pointer; text-decoration: underline;" (click)="guest()">Continue as guest</p>
+            <p style="color: white; margin: 12px; cursor: pointer; text-decoration: underline;" (click)="forgot()">Forgot my password</p>
         </div>
         <!-- Sign Up -->
-        <div *ngIf="isSignUp && !isForgot">    
+        <div *ngIf="isSignUp">    
             <form (submit)="signup()">
                 <label>User:</label>
                 <input type="text" [(ngModel)]="username" name="user" required>
@@ -37,23 +36,9 @@
                 
                 <p *ngIf="mensaje" class="error">{{mensaje}}</p>
             </form>
-            <p style="color: white; margin: 12px;" (click)="isSignUp=false;">Already have an account? <span style=" cursor: pointer; text-decoration: underline;">Login</span></p>
+            <p style="color: white; margin: 12px;" (click)="isSignUp=false; isLogin=true;">Already have an account? <span style=" cursor: pointer; text-decoration: underline;">Login</span></p>
             <p style="color: white; margin: 12px;">or</p>
-            <p style="color: white; margin: 12px; cursor: pointer; text-decoration: underline;" (click)="guest()">Continue as guest</p>
-        </div>
-        <!-- Recover password -->
-        <div *ngIf="!isSignUp && showForgot && isForgot">
-            <form (submit)="recover()">
-                <label>email:</label>
-                <input type="text" [(ngModel)]="email" name="email" required>
-                
-                <button type="submit">Send password to email</button>
-                
-                <!-- <p *ngIf="mensaje" class="error">{{mensaje}}</p> -->
-            </form>
-            <!-- <p style="color: white; margin: 12px;" (click)="isSignUp=true">Don't have an account? <span style=" cursor: pointer; text-decoration: underline;">Sign up</span></p>
-            <p style="color: white; margin: 12px;">or</p>
-            <p style="color: white; margin: 12px; cursor: pointer; text-decoration: underline;" (click)="guest()">Continue as guest</p> -->
+            <p style="color: white; margin: 12px; cursor: pointer; text-decoration: underline;" (click)="forgot()">Forgot my password</p>
         </div>
     </div>
 </div>

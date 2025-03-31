@@ -16,7 +16,11 @@ export class ApiService {
   }
 
   signup(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, {username, email, password})
+    return this.http.post(`${this.apiUrl}/signup`, {username, email, password});
+  }
+
+  forgot_password(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recover`, {email});
   }
 
   fetchChuck(category: string, num: number): Observable<any> {

@@ -40,7 +40,6 @@ router.post('/login', async (req, res) => {
     });
   });
   
-  
   router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -106,6 +105,28 @@ router.post('/login', async (req, res) => {
       success: true,
       message: 'Usuario registrado correctamente',
       user_id: user.id
+    });
+  });
+
+  router.post('/recover', async (req, res) => {
+    const { email } = req.body;
+  
+    if (!email) {
+      return res.status(400).json({ success: false, error: 'El correo es requerido' });
+    }
+  
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:4200/reset-password?fromEmail=true'
+    });
+  
+    if (error) {
+      console.log('Error al enviar correo de recuperación:', error.message);
+      return res.status(500).json({ success: false, error: error.message });
+    }
+  
+    return res.status(200).json({
+      success: true,
+      message: 'Correo de recuperación enviado correctamente'
     });
   });
 
