@@ -18,14 +18,14 @@ const routes: Routes = [
     path: '', component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
       { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
     ]
   },
 
   // Ruta catch-all (opcional)
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 

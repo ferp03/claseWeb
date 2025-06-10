@@ -35,30 +35,31 @@ export class DashboardComponent implements OnInit{
     this.fetchChuck();
   }
 
-  fetchChuck(): void {
-    this.apiService.fetchChuck(this.selectedCategory, 30)
-      .toPromise()
-      .then(response => {
-        this.chuckJson = response.jokes as Joke[];
-        this.currentPage  = 1;
-        console.log(this.chuckJson);
-      })
-      .catch(error => {
-        console.log('Error al buscar chiste', error);
-      });
-  }
+fetchChuck(): void {
+  this.apiService.fetchChuck(this.selectedCategory, 30)
+    .toPromise()
+    .then(response => {
+      // Si response es un arreglo, asígnalo directamente
+      this.chuckJson = Array.isArray(response) ? response as Joke[] : (response.jokes as Joke[]);
+      this.currentPage  = 1;
+      console.log(this.chuckJson);
+    })
+    .catch(error => {
+      console.log('Error al buscar chiste', error);
+    });
+}
 
-  fetchCategories(): void {
-    this.apiService.fetchCategories()
-      .toPromise()
-      .then(response => {
-        this.categories = [...this.categories, ...response.categories];
-        console.log(this.categories, typeof(this.categories));
-      })
-      .catch(error => {
-        console.log('Error al obtener categorías', error);
-      });
-  }
+fetchCategories(): void {
+  this.apiService.fetchCategories()
+    .toPromise()
+    .then(response => {
+      this.categories = Array.isArray(response) ? ['none', ...response] : [...this.categories, ...response.categories];
+      console.log(this.categories, typeof(this.categories));
+    })
+    .catch(error => {
+      console.log('Error al obtener categorías', error);
+    });
+}
 
   get filterSearchJokes(): Joke[] {
     if(this.searchText === '' || !this.searchText){

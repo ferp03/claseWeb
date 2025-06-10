@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const authRoutes = require('./routes/auth.routes');
+// const authRoutes = require('./routes/auth.routes');
 const chuckRoutes = require('./routes/chuck.routes');
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(cors({
 app.use(bodyParser.json());
 
 // Modulos
-app.use(authRoutes);
+// app.use(authRoutes);
 app.use(chuckRoutes);
 
 // Iniciar el servidor
